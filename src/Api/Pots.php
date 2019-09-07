@@ -40,14 +40,15 @@ trait Pots
      * @param string $id
      * @param int $amount
      * @param null|string $account
+     * @param null|string $dedupeId
      * @return \Amelia\Monzo\Models\Pot
      */
-    public function addToPot(string $id, int $amount, ?string $account = null)
+    public function addToPot(string $id, int $amount, ?string $account = null, ?string $dedupeId = null)
     {
         $results = $this->call('PUT', "pots/{$id}/deposit", [], [
             'amount' => $amount,
             'source_account_id' => $account ?? $this->getAccountId(),
-            'dedupe_id' => (string) Uuid::uuid4(),
+            'dedupe_id' => $dedupeId ?? (string) Uuid::uuid4(),
         ]);
 
         return new Pot($results, $this);
@@ -59,14 +60,15 @@ trait Pots
      * @param string $id
      * @param int $amount
      * @param null|string $account
+     * @param null|string $dedupeId
      * @return \Amelia\Monzo\Models\Pot
      */
-    public function withdrawFromPot(string $id, int $amount, ?string $account = null)
+    public function withdrawFromPot(string $id, int $amount, ?string $account = null, ?string $dedupeId = null)
     {
         $results = $this->call('PUT', "pots/{$id}/withdraw", [], [
             'amount' => $amount,
             'destination_account_id' => $account ?? $this->getAccountId(),
-            'dedupe_id' => (string) Uuid::uuid4(),
+            'dedupe_id' => $dedupeId ?? (string) Uuid::uuid4(),
         ]);
 
         return new Pot($results, $this);
