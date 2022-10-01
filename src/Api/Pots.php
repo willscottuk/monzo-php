@@ -14,9 +14,9 @@ trait Pots
      */
     public function pots(string $currentAccountID)
     {
-        $results = $this->call('GET', 'pots', [], [
+        $results = $this->call('GET', 'pots', [
             'current_account_id' => $currentAccountID,
-        ], 'pots');
+        ], [], 'pots');
 
         return collect($results)->map(function ($item) {
             return new Pot($item, $this);
