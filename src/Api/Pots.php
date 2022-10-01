@@ -12,9 +12,11 @@ trait Pots
      *
      * @return \Amelia\Monzo\Models\Pot[]|\Illuminate\Support\Collection
      */
-    public function pots()
+    public function pots(string $currentAccountID)
     {
-        $results = $this->call('GET', 'pots', [], [], 'pots');
+        $results = $this->call('GET', 'pots', [], [
+            'current_account_id' => $currentAccountID,
+        ], 'pots');
 
         return collect($results)->map(function ($item) {
             return new Pot($item, $this);
