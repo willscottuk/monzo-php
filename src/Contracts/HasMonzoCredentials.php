@@ -21,7 +21,7 @@ interface HasMonzoCredentials
      * @param string $refreshToken
      * @return void
      */
-    public function updateMonzoCredentials(string $token, string $refreshToken);
+    public function updateMonzoCredentials(string $token, string $refreshToken, string $expires);
 
     /**
      * Get a monzo user's access token.
@@ -36,6 +36,13 @@ interface HasMonzoCredentials
      * @return string|null
      */
     public function getMonzoRefreshToken();
+
+    /**
+     * Get a monzo user's access token expiry.
+     *
+     * @return string|null
+     */
+    public function getMonzoTokenExpiry();
 
     /**
      * Get a monzo user's refresh token.

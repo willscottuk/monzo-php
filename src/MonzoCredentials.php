@@ -58,6 +58,16 @@ trait MonzoCredentials
     }
 
     /**
+     * Get a monzo user's access token expiry.
+     *
+     * @return string|null
+     */
+    public function getMonzoTokenExpiry()
+    {
+        return $this->getAttribute($this->getMonzoExpiresColumn());
+    }
+
+    /**
      * Get a monzo user's refresh token.
      *
      * @return string|null
