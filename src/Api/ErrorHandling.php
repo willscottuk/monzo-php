@@ -4,6 +4,7 @@ namespace Amelia\Monzo\Api;
 
 use Closure;
 use Amelia\Monzo\Exceptions\InvalidTokenException;
+use Illuminate\Support\Carbon;
 
 /**
  * Handle common retrying.
@@ -46,11 +47,12 @@ trait ErrorHandling
 
         $token = $result['access_token'];
         $refreshToken = $result['refresh_token'];
+        $expires = Carbon::now()->addSeconds($result['expires_in']);
 
         if ($this->hasUser()) {
             $user = $this->getUser();
 
-            $user->updateMonzoCredentials($token, $refreshToken);
+            $user->updateMonzoCredentials($token, $refreshToken, $expires);
         }
 
         $this->token = $token;

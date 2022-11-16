@@ -49,8 +49,8 @@ trait UsesTokens
     public function refresh(string $refreshToken)
     {
         $result = $this->newClient()->call('POST', 'oauth2/token', [], [
-            'client_id' => $this->id,
-            'client_secret' => $this->secret,
+            'client_id' => config('services.monzo.client_id'),
+            'client_secret' => config('services.monzo.client_secret'),
             'refresh_token' => $refreshToken,
             'grant_type' => 'refresh_token',
         ]);

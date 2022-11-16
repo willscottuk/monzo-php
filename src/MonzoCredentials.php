@@ -28,10 +28,11 @@ trait MonzoCredentials
      * @param string $refreshToken
      * @return void
      */
-    public function updateMonzoCredentials(string $token, string $refreshToken)
+    public function updateMonzoCredentials(string $token, string $refreshToken, string $expires)
     {
         $this->setAttribute($this->getMonzoAccessTokenColumn(), $token);
         $this->setAttribute($this->getMonzoRefreshTokenColumn(), $refreshToken);
+        $this->setAttribute($this->getMonzoExpiresColumn(), $expires);
 
         $this->save();
     }
@@ -94,6 +95,16 @@ trait MonzoCredentials
     protected function getMonzoRefreshTokenColumn()
     {
         return 'monzo_refresh_token';
+    }
+
+    /**
+     * Get the attribute name for a monzo user's refresh token.
+     *
+     * @return string
+     */
+    protected function getMonzoExpiresColumn()
+    {
+        return 'monzo_token_expires';
     }
 
     /**

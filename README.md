@@ -15,7 +15,6 @@
 </p>
 <p align="center">This library allows access to the <a href="https://monzo.com">Monzo</a> API in PHP. This library requires PHP 7.1+.</p>
 
-
 ## Installation
 
 ```
@@ -29,6 +28,16 @@ You should set the following variables in your `.env` (or otherwise):
 - `MONZO_CLIENT_ID`
 - `MONZO_CLIENT_SECRET`
 - `MONZO_REDIRECT_URI`
+
+You should add the following to your `config/services.php` file:
+
+```php
+'monzo' => [
+        'client_id' => env('MONZO_CLIENT_ID'),
+        'client_secret' => env('MONZO_CLIENT_SECRET'),
+        'redirect' => env('MONZO_REDIRECT_URI'),
+    ],
+```
 
 You can create an application at [https://developers.monzo.com](https://developers.monzo.com).
 
@@ -79,9 +88,9 @@ use Amelia\Monzo\MonzoCredentials;
 use Amelia\Monzo\Contracts\HasMonzoCredentials;
 
 class User implements HasMonzoCredentials {
-    
+
     use MonzoCredentials;
-    
+
     protected function getMonzoAccessTokenColumn()
     {
         return 'monzo_access_token';
@@ -90,6 +99,11 @@ class User implements HasMonzoCredentials {
     protected function getMonzoRefreshTokenColumn()
     {
         return 'monzo_refresh_token';
+    }
+
+    protected function getMonzoExpiresColumn()
+    {
+        return 'monzo_token_expires';
     }
 
     protected function getMonzoUserIdColumn()
@@ -106,7 +120,6 @@ Assuming your users table is named `users`, you can simply run `php artisan vend
 This will create a migration in your `migrations` directory that can be edited.
 
 Run `php artisan migrate` to run this.
-
 
 ## Usage
 
@@ -134,7 +147,6 @@ Using the API is pretty simple.
 In general, you'll need an access token or a user object.
 
 ## Examples
-
 
 ### Grab a user's accounts.
 
@@ -199,4 +211,3 @@ $user = User::findOrFail($id);
 
 $balance = $monzo->as($user)->balance();
 ```
-
