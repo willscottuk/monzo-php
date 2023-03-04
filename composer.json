@@ -16,7 +16,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=7.1",
-    "illuminate/support": "^9.21",
+    "illuminate/support": "^9.21|^10.0",
     "ramsey/uuid": "^4.2",
     "guzzlehttp/guzzle": "^7.5"
   },
