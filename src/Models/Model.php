@@ -147,14 +147,14 @@ class Model implements Jsonable, Arrayable, JsonSerializable, ArrayAccess
      */
     public function cast(string $key, $value)
     {
-        if (! array_key_exists($key, $this->casts) || $value === null) {
+        if (!array_key_exists($key, $this->casts) || $value === null) {
             return $value;
         }
 
         $cast = $this->casts[$key];
         $collection = false;
 
-        if (starts_with($cast, 'collection:') && is_array($value)) {
+        if (str_starts_with($cast, 'collection:') && is_array($value)) {
             $collection = true;
             $cast = substr($cast, 10);
         }
