@@ -2,8 +2,6 @@
 
 namespace Amelia\Monzo\Util;
 
-use Illuminate\Support\Str;
-
 class QueryParams
 {
     /**
@@ -65,7 +63,7 @@ class QueryParams
         $name = rawurlencode($name);
 
         return collect($value)->map(function ($value, $key) use ($name) {
-            if (Str::is($key)) {
+            if (is_string($key)) {
                 $key = rawurlencode($key);
 
                 return "{$name}[$key]=" . rawurlencode($value);

@@ -5,6 +5,7 @@ namespace Amelia\Monzo\Exceptions;
 use RuntimeException;
 use Psr\Http\Message\ResponseInterface;
 use function Amelia\Monzo\json_decode_response;
+use Illuminate\Support\Str;
 
 class MonzoException extends RuntimeException
 {
@@ -135,7 +136,7 @@ class MonzoException extends RuntimeException
             // exact match first, followed by pattern match.
             $class = $errors->get($errorCode)
                 ?? $errors->first(function ($value, string $key) use ($errorCode) {
-                    return str_is($key, $errorCode);
+                    return Str::is($key, $errorCode);
                 });
 
             if ($class !== null) {

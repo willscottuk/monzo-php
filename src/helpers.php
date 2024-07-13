@@ -7,6 +7,7 @@ use function json_decode as base_json_decode;
 use Amelia\Monzo\Exceptions\JsonErrorException;
 use Amelia\Monzo\Exceptions\EmptyResponseException;
 use Amelia\Monzo\Exceptions\UnexpectedValueException;
+use Illuminate\Support\Str;
 
 /**
  * Deserialize JSON from Monzo's API.
@@ -36,7 +37,7 @@ function json_decode_response(ResponseInterface $response, string $body)
 {
     $type = $response->getHeaderLine('Content-Type');
 
-    if (! str_is('application/*json', $type)) {
+    if (!Str::is('application/*json', $type)) {
         throw new UnexpectedValueException("Expected application/*json, got $type");
     }
 

@@ -14,7 +14,6 @@ use Amelia\Monzo\Api\ErrorHandling;
 use Amelia\Monzo\Exceptions\MonzoException;
 use Amelia\Monzo\Contracts\HasMonzoCredentials;
 use Amelia\Monzo\Contracts\Client as ClientContract;
-use Illuminate\Support\Str;
 
 class Monzo
 {
@@ -96,7 +95,7 @@ class Monzo
     public function as($user, string $refreshToken = null)
     {
         // assume a raw access token was just passed in
-        if (Str::is($user)) {
+        if (is_string($user)) {
             $this->token = $user;
             $this->refreshToken = $refreshToken;
         } // if we were given a socialite user, use that.
