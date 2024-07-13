@@ -14,6 +14,7 @@ use Amelia\Monzo\Api\ErrorHandling;
 use Amelia\Monzo\Exceptions\MonzoException;
 use Amelia\Monzo\Contracts\HasMonzoCredentials;
 use Amelia\Monzo\Contracts\Client as ClientContract;
+use Illuminate\Support\Str;
 
 class Monzo
 {
@@ -95,7 +96,7 @@ class Monzo
     public function as($user, string $refreshToken = null)
     {
         // assume a raw access token was just passed in
-        if (is_string($user)) {
+        if (Str::is($user)) {
             $this->token = $user;
             $this->refreshToken = $refreshToken;
         } // if we were given a socialite user, use that.
@@ -203,8 +204,8 @@ class Monzo
         else {
             throw new TypeError(
                 static::class . '::' . __METHOD__ .
-                ' expects ' . User::class . ' or an object using '
-                . MonzoCredentials::class
+                    ' expects ' . User::class . ' or an object using '
+                    . MonzoCredentials::class
             );
         }
     }
@@ -222,7 +223,7 @@ class Monzo
         if ($token === null) {
             throw new MonzoException(
                 'An access token has not been set; ' .
-                'have you given a user?'
+                    'have you given a user?'
             );
         }
 
@@ -240,7 +241,7 @@ class Monzo
         if ($token === null) {
             throw new MonzoException(
                 'A refresh token has not been set; ' .
-                'have you given a user, and are you using a confidential client?'
+                    'have you given a user, and are you using a confidential client?'
             );
         }
 
