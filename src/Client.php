@@ -4,6 +4,7 @@ namespace Amelia\Monzo;
 
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Client as Guzzle;
+use Illuminate\Support\Arr;
 use Amelia\Monzo\Exceptions\MonzoException;
 use Amelia\Monzo\Contracts\Client as ClientContract;
 use Amelia\Monzo\Exceptions\UnexpectedValueException;
@@ -115,12 +116,12 @@ class Client implements ClientContract
         $json = json_decode_response($response, $body);
 
         if ($code >= 400 || $code < 200) {
-            $errorCode = array_get($json, 'error');
+            $errorCode = Arr::get($json, 'error');
 
             throw MonzoException::fromResponse($response, $body, $errorCode);
         }
 
-        if ($key !== null && ! array_key_exists($key, $json)) {
+        if ($key !== null && !array_key_exists($key, $json)) {
             throw new UnexpectedValueException("Expected to find a [$key] key within the response; none found.");
         }
 
