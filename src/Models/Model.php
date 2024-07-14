@@ -154,7 +154,7 @@ class Model implements Jsonable, Arrayable, JsonSerializable, ArrayAccess
         $cast = $this->casts[$key];
         $collection = false;
 
-        if (str_starts_with($cast, 'collection:') && is_array($value)) {
+        if (Str::startsWith($cast, 'collection:') && is_array($value)) {
             $collection = true;
             $cast = substr($cast, 10);
         }
